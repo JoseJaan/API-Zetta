@@ -78,3 +78,23 @@ export const getBestSellersByDate = async ({ date, list, offset = 0 }: GetListBy
     throw error;
   }
 };
+
+interface GetOverviewParams {
+  published_date?: string; 
+}
+
+export const getOverviewLists = async ({ published_date }: GetOverviewParams = {}) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/lists/overview.json`, {
+      params: {
+        'api-key': API_KEY,
+        published_date
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error('Erro ao buscar overview das listas:', error);
+    throw error;
+  }
+};
