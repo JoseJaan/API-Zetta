@@ -1,0 +1,73 @@
+@import 'bootstrap/scss/bootstrap';
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: $text-color;
+  background-color: $light-bg;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.section-title {
+  color: $primary-color;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.form-control, .btn, .card {
+  border-radius: 8px;
+}
+
+.btn-primary {
+  background-color: $primary-color;
+  border-color: $primary-color;
+  
+  &:hover, &:focus {
+    background-color: darken($primary-color, 10%);
+    border-color: darken($primary-color, 10%);
+  }
+}
+
+.btn-success {
+  background-color: $secondary-color;
+  border-color: $secondary-color;
+  
+  &:hover, &:focus {
+    background-color: darken($secondary-color, 10%);
+    border-color: darken($secondary-color, 10%);
+  }
+}
+
+// Form styles
+.search-form {
+  background-color: darken($primary-color, 5%);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  
+  label {
+    color: white;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-control {
+    border: none;
+    
+    &:focus {
+      box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+    }
+  }
+}

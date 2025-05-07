@@ -1,0 +1,14 @@
+@import '../../styles/variables';
+
+.list-overview-page {
+  .list-container {
+    margin-top: 2rem;
+  }
+  
+  .loading {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.2rem;
+    color: $primary-color;
+  }
+}

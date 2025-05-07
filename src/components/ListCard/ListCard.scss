@@ -1,0 +1,49 @@
+@import '../../styles/variables';
+
+.list-card {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .list-name {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: $primary-color;
+  }
+
+  .list-update-date,
+  .list-publication-date,
+  .list-ranking {
+    margin: 0.5rem 0;
+    font-size: 0.9rem;
+    color: #555;
+  }
+
+  .list-image {
+    margin-top: 1rem;
+    align-self: center;
+    
+    img {
+      max-width: 100%;
+      border-radius: 4px;
+    }
+    
+    .image-caption {
+      text-align: center;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      color: #777;
+    }
+  }
+}
