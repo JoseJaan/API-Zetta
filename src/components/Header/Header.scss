@@ -12,12 +12,14 @@
   }
 
   .header-title {
+    font-family: 'Italiana';
     font-size: 1.5rem;
     font-weight: 500;
     margin: 0;
   }
 
   .dropdown-toggle {
+    font-family: 'Italiana', serif;
     background-color: $secondary-color;
     border: none;
     
@@ -28,6 +30,7 @@
 
   .dropdown-menu {
     .dropdown-item {
+      font-family: 'Italiana', serif;
       &.active {
         background-color: $secondary-color;
       }
