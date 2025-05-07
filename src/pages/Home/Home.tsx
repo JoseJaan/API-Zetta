@@ -14,10 +14,10 @@ const Home = () => {
     loadLists();
   }, []);
 
-  const loadLists = async (date?: string) => {
+  const loadLists = async () => {
     try {
       setLoading(true);
-      const data = await fetchLists(date);
+      const data = await fetchLists();
       setLists(data);
     } catch (error) {
       console.error('Error loading lists:', error);
@@ -32,7 +32,7 @@ const Home = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    loadLists(publicationDate);
+    loadLists();
   };
 
   return (
