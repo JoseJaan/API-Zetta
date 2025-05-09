@@ -16,6 +16,8 @@ const ListCard = ({
   showImage = false,
   showBooks = false 
 }: ListCardProps) => {
+  console.log("list: ",list)
+  console.log("list.updated: ",list.updated)
   return (
     <div className="list-card">
       <div className="list-card-header">

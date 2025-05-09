@@ -1,4 +1,3 @@
-// src/services/api.ts
 import { Book, BookList } from '../types/index';
 import { 
   getBestSellers,
@@ -13,12 +12,11 @@ export const fetchLists = async (
 ): Promise<BookList[]> => {
   try {
     const response = await getBestSellers({
-      list: 'hardcover-fiction', // Valor padrão, pode ser ajustado conforme necessário
+      list: 'hardcover-fiction',
       publishedDate: publicationDate,
       bestsellersDate: bestSellersDate
     });
 
-    // Transforma a resposta da API para o formato BookList[]
     return response.results.map((item: any) => ({
       id: item.list_id || item.list_name_encoded,
       name: item.list_name,
@@ -42,7 +40,6 @@ export const fetchListOverview = async (
       published_date: publicationDate 
     });
 
-    // Transforma a resposta do overview para o formato BookList[]
     return response.results.lists.map((list: any) => ({
       id: list.list_id || list.list_name_encoded,
       name: list.list_name,
@@ -68,12 +65,12 @@ export const fetchListByDate = async (
     });
 
     const result = response.results;
-    
+    console.log("result: ",result)
     return {
       id: result.list_id || result.list_name_encoded,
       name: result.list_name,
       displayName: result.display_name,
-      updated: result.updated,
+      updated: result.previous_published_date,
       listImage: result.list_image || null,
       books: result.books ? result.books.map((book: any) => transformBookData(book)) : []
     };
@@ -99,7 +96,6 @@ export const searchBooks = async ({
       author
     });
     
-    // Transforma a resposta da API para o formato Book[]
     return response.results.map((item: any) => ({
       id: item.isbn13 || item.primary_isbn13 || item.isbn10 || item.primary_isbn10 || item.title,
       title: item.book_title || item.title,
@@ -122,7 +118,6 @@ export const searchBooks = async ({
   }
 };
 
-// Função auxiliar para transformar os dados de livros
 const transformBookData = (book: any): Book => {
   return {
     id: book.primary_isbn13 || book.primary_isbn10 || book.title,

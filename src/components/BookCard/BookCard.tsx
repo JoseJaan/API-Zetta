@@ -16,10 +16,22 @@ const BookCard = ({
   compact = false,
   showReviews = false 
 }: BookCardProps) => {
-  // Versão compacta para exibição em listas
+  
+  const handleBookClick = () => {
+    if (book.amazonUrl) {
+      window.open(book.amazonUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+  
   if (compact) {
     return (
-      <div className="book-card compact">
+      <div 
+        className="book-card compact" 
+        onClick={handleBookClick}
+        role="button"
+        aria-label={`Ver ${book.title} na Amazon`}
+        tabIndex={0}
+      >
         <div className="d-flex">
           {book.imageUrl && (
             <div className="compact-image">
@@ -36,9 +48,14 @@ const BookCard = ({
     );
   }
 
-  // Versão completa do card
   return (
-    <div className="book-card">
+    <div 
+      className="book-card"
+      onClick={handleBookClick}
+      role="button"
+      aria-label={`Ver ${book.title} na Amazon`}
+      tabIndex={0}
+    >
       <h3 className="book-title">{book.title}</h3>
       <p className="book-author">Por {book.author}</p>
       
@@ -91,6 +108,7 @@ const BookCard = ({
             href={book.amazonUrl} 
             target="_blank" 
             rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
           >
             Comprar na Amazon
           </a>
