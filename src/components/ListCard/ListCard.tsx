@@ -1,34 +1,53 @@
+import React from 'react';
 import { BookList } from '../../types';
+import BookCard from '../BookCard/BookCard';
 import './ListCard.scss';
 
 interface ListCardProps {
   list: BookList;
   showRanking?: boolean;
   showImage?: boolean;
+  showBooks?: boolean;
 }
 
-const ListCard = ({ list, showRanking = false, showImage = false }: ListCardProps) => {
+const ListCard = ({ 
+  list, 
+  showRanking = false, 
+  showImage = false,
+  showBooks = false 
+}: ListCardProps) => {
   return (
     <div className="list-card">
-      <div className="list-card-content">
-        <h3 className="list-name">{list.name}</h3>
-        <p className="list-update-date">Taxa de atualizacao: {list.updateDate}</p>
-        
+      <div className="list-card-header">
+        <h3 className="list-name">{list.displayName || list.name}</h3>
         {showRanking && list.ranking && (
-          <p className="list-ranking">Ranking: {list.ranking}</p>
-        )}
-        
-        {list.publicationDate && (
-          <p className="list-publication-date">Data de publicação: {list.publicationDate}</p>
+          <span className="list-ranking">Ranking: {list.ranking}</span>
         )}
       </div>
       
-      {showImage && list.image && (
-        <div className="list-image">
-          <img src={list.image} alt={list.name} />
-          <p className="image-caption">List img se aplicavel</p>
-        </div>
-      )}
+      <div className="list-card-content">
+        <p className="list-update-date">Atualizado em: {new Date(list.updated).toLocaleDateString()}</p>
+        
+        {showImage && list.listImage && (
+          <div className="list-image">
+            <img src={list.listImage} alt={list.name} />
+          </div>
+        )}
+        
+        {showBooks && list.books && list.books.length > 0 && (
+          <div className="books-preview">
+            <h4>Livros nesta lista:</h4>
+            <div className="books-grid">
+              {list.books.slice(0, 5).map(book => (
+                <BookCard key={book.id} book={book} compact={true} />
+              ))}
+              {list.books.length > 5 && (
+                <p className="more-books">+ mais {list.books.length - 5} livros</p>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

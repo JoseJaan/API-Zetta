@@ -1,99 +1,139 @@
-import { Book, BookList } from '../types';
+// src/services/api.ts
+import { Book, BookList } from '../types/index';
+import { 
+  getBestSellers,
+  getBookReviews,
+  getBestSellersByDate,
+  getOverviewLists
+} from './booksApi';
 
-// Base URL for the API
-//const API_BASE_URL = 'https://api.zettabooks.com';
+export const fetchLists = async (
+  publicationDate?: string,
+  bestSellersDate?: string
+): Promise<BookList[]> => {
+  try {
+    const response = await getBestSellers({
+      list: 'hardcover-fiction', // Valor padrão, pode ser ajustado conforme necessário
+      publishedDate: publicationDate,
+      bestsellersDate: bestSellersDate
+    });
 
-// Simulated data since we're not connecting to a real API
-const mockLists: BookList[] = [
-  {
-    id: '1',
-    name: 'New York Times Best Sellers',
-    updateDate: '2025-05-01',
-    publicationDate: '2025-05-01',
-    ranking: 1
-  },
-  {
-    id: '2',
-    name: 'Amazon Top Picks',
-    updateDate: '2025-05-02',
-    publicationDate: '2025-05-02',
-    ranking: 2
-  },
-  {
-    id: '3',
-    name: 'Editor\'s Choice',
-    updateDate: '2025-05-03',
-    publicationDate: '2025-04-30',
-    ranking: 3
+    // Transforma a resposta da API para o formato BookList[]
+    return response.results.map((item: any) => ({
+      id: item.list_id || item.list_name_encoded,
+      name: item.list_name,
+      displayName: item.display_name,
+      updated: item.updated,
+      listImage: item.list_image || null,
+      books: item.books ? item.books.map((book: any) => transformBookData(book)) : [],
+      ranking: item.rank || null
+    }));
+  } catch (error) {
+    console.error('Error fetching lists:', error);
+    return [];
   }
-];
-
-const mockBooks: Book[] = [
-  {
-    id: '1',
-    title: 'The Future of AI',
-    author: 'Jane Smith',
-    isbn: '978-3-16-148410-0',
-    summary: 'An exploration of artificial intelligence and its impact on society.'
-  },
-  {
-    id: '2',
-    title: 'Web Development Mastery',
-    author: 'John Doe',
-    isbn: '978-1-56619-909-4',
-    summary: 'A comprehensive guide to modern web development techniques.'
-  },
-  {
-    id: '3',
-    title: 'The Digital Revolution',
-    author: 'Alex Johnson',
-    isbn: '978-0-306-40615-7',
-    summary: 'How technology is transforming our lives and businesses.'
-  }
-];
-
-export const fetchLists = async (): Promise<BookList[]> => {
-  // In a real application, this would be an actual API call
-  // return fetch(`${API_BASE_URL}/lists?date=${date}`).then(res => res.json());
-  
-  // For now, return mock data with a slight delay to simulate network
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(mockLists);
-    }, 500);
-  });
 };
 
-export const fetchBooksByList = async (): Promise<Book[]> => {
-  // In a real application:
-  // return fetch(`${API_BASE_URL}/lists/${listId}/books`).then(res => res.json());
-  
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(mockBooks);
-    }, 500);
-  });
+export const fetchListOverview = async (
+  publicationDate?: string
+): Promise<BookList[]> => {
+  try {
+    const response = await getOverviewLists({ 
+      published_date: publicationDate 
+    });
+
+    // Transforma a resposta do overview para o formato BookList[]
+    return response.results.lists.map((list: any) => ({
+      id: list.list_id || list.list_name_encoded,
+      name: list.list_name,
+      displayName: list.display_name,
+      updated: list.updated,
+      listImage: list.list_image || null,
+      books: list.books ? list.books.map((book: any) => transformBookData(book)) : []
+    }));
+  } catch (error) {
+    console.error('Error fetching overview:', error);
+    return [];
+  }
 };
 
-export const searchBooks = async (query: { isbn?: string, title?: string, author?: string }): Promise<Book[]> => {
-  // In a real application:
-  // return fetch(`${API_BASE_URL}/books/search?isbn=${query.isbn}&title=${query.title}&author=${query.author}`)
-  //   .then(res => res.json());
-  
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // Simple filtering for demo purposes
-      let results = [...mockBooks];
-      if (query.isbn) {
-        results = results.filter(book => book.isbn.includes(query.isbn || ''));
-      }
-      if (query.title) {
-        results = results.filter(book => book.title.toLowerCase().includes((query.title || '').toLowerCase()));
-      }
-      if (query.author) {
-        results = results.filter(book => book.author.toLowerCase().includes((query.author || '').toLowerCase()));
-      }
-      resolve(results);
-    }, 500);
-  });
+export const fetchListByDate = async (
+  date: string,
+  list: string
+): Promise<BookList | null> => {
+  try {
+    const response = await getBestSellersByDate({
+      date,
+      list
+    });
+
+    const result = response.results;
+    
+    return {
+      id: result.list_id || result.list_name_encoded,
+      name: result.list_name,
+      displayName: result.display_name,
+      updated: result.updated,
+      listImage: result.list_image || null,
+      books: result.books ? result.books.map((book: any) => transformBookData(book)) : []
+    };
+  } catch (error) {
+    console.error('Error fetching list by date:', error);
+    return null;
+  }
+};
+
+export const searchBooks = async ({
+  isbn,
+  title,
+  author
+}: {
+  isbn?: string;
+  title?: string;
+  author?: string;
+}): Promise<Book[]> => {
+  try {
+    const response = await getBookReviews({
+      isbn,
+      title,
+      author
+    });
+    
+    // Transforma a resposta da API para o formato Book[]
+    return response.results.map((item: any) => ({
+      id: item.isbn13 || item.primary_isbn13 || item.isbn10 || item.primary_isbn10 || item.title,
+      title: item.book_title || item.title,
+      author: item.book_author || item.author,
+      description: item.summary || item.description || '',
+      publisher: item.publisher || '',
+      imageUrl: item.book_image || '',
+      amazonUrl: item.amazon_product_url || '',
+      isbn: item.primary_isbn13 || item.isbn13 || item.primary_isbn10 || item.isbn10 || '',
+      rank: item.rank || null,
+      reviews: [{
+        url: item.url || '',
+        byline: item.byline || '',
+        summary: item.summary || ''
+      }]
+    }));
+  } catch (error) {
+    console.error('Error searching books:', error);
+    return [];
+  }
+};
+
+// Função auxiliar para transformar os dados de livros
+const transformBookData = (book: any): Book => {
+  return {
+    id: book.primary_isbn13 || book.primary_isbn10 || book.title,
+    title: book.title,
+    author: book.author,
+    description: book.description || '',
+    publisher: book.publisher || '',
+    imageUrl: book.book_image || '',
+    amazonUrl: book.amazon_product_url || '',
+    isbn: book.primary_isbn13 || book.primary_isbn10 || '',
+    rank: book.rank || null,
+    reviews: []
+  };
 };

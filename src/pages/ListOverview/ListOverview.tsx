@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Form } from 'react-bootstrap';
-import { BookList } from '../../types';
-import { fetchLists } from '../../services/api';
+import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { BookList } from '../../types/index';
+import { fetchListOverview } from '../../services/api';
 import ListCard from '../../components/ListCard/ListCard';
 import './ListOverview.scss';
 
@@ -17,10 +17,10 @@ const ListOverview = () => {
   const loadLists = async () => {
     try {
       setLoading(true);
-      const data = await fetchLists();
+      const data = await fetchListOverview(publicationDate || undefined);
       setLists(data);
     } catch (error) {
-      console.error('Error loading lists:', error);
+      console.error('Error loading lists overview:', error);
     } finally {
       setLoading(false);
     }
@@ -37,40 +37,48 @@ const ListOverview = () => {
 
   return (
     <Container className="list-overview-page">
-      <h2 className="section-title">Lista de Overview</h2>
-      
+      <h2 className="section-title">Visão Geral das Listas</h2>
+     
       <Form className="search-form" onSubmit={handleSubmit}>
         <Row>
-          <Col>
+          <Col md={6}>
             <Form.Group controlId="publicationDate">
               <Form.Label>Data de publicação</Form.Label>
-              <Form.Control 
-                type="date" 
-                value={publicationDate} 
+              <Form.Control
+                type="date"
+                value={publicationDate}
                 onChange={handleDateChange}
               />
             </Form.Group>
           </Col>
+          <Col md={6} className="d-flex align-items-end mb-3">
+            <Button type="submit" variant="primary">Buscar</Button>
+          </Col>
         </Row>
       </Form>
-      
+     
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
         <div className="list-container">
-          <Row>
-            {lists.map((list) => (
-              <Col key={list.id} xs={12} className="mb-4">
-                <ListCard 
-                  list={{
-                    ...list,
-                    image: "https://via.placeholder.com/150" // Adding placeholder for display purposes
-                  }} 
-                  showImage={true}
-                />
-              </Col>
-            ))}
-          </Row>
+          {lists.length > 0 ? (
+            <Row>
+              {lists.map((list) => (
+                <Col key={list.id} xs={12} className="mb-4">
+                  <ListCard
+                    list={{
+                      ...list,
+                      listImage: list.listImage || "https://via.placeholder.com/150"
+                    }}
+                    showImage={true}
+                    showBooks={true}
+                  />
+                </Col>
+              ))}
+            </Row>
+          ) : (
+            <div className="no-results">Nenhuma lista encontrada para a data especificada.</div>
+          )}
         </div>
       )}
     </Container>
