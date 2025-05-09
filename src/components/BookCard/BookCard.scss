@@ -31,6 +31,22 @@
     margin-bottom: 1rem;
   }
 
+  .book-image {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+    
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 4px;
+      max-height: 200px;
+    }
+  }
+
   .book-summary {
     border-top: 1px solid #ddd;
     padding-top: 1rem;
@@ -47,6 +63,41 @@
       font-size: 0.9rem;
       line-height: 1.5;
       color: #333;
+    }
+  }
+
+  &.compact {
+    padding: 1rem;
+    
+    .d-flex {
+      display: flex;
+      align-items: center;
+    }
+    
+    .compact-image {
+      width: 80px;
+      height: 120px;
+      margin-right: 1rem;
+      flex-shrink: 0;
+      
+      .book-thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+    }
+    
+    .compact-info {
+      .book-title {
+        font-size: 1rem;
+        margin-bottom: 0.25rem;
+      }
+      
+      .book-author {
+        font-size: 0.85rem;
+        margin-bottom: 0.5rem;
+      }
     }
   }
 }

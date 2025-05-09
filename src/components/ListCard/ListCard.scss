@@ -33,10 +33,18 @@
   .list-image {
     margin-top: 1rem;
     align-self: center;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
     
     img {
-      max-width: 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: 4px;
+      max-height: 200px;
     }
     
     .image-caption {
@@ -44,6 +52,29 @@
       font-size: 0.8rem;
       margin-top: 0.5rem;
       color: #777;
+    }
+  }
+
+  .books-preview {
+    margin-top: 1.5rem;
+
+    h4 {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: $primary-color;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .more-books {
+      margin-top: 0.5rem;
+      text-align: right;
+      font-style: italic;
+      color: #666;
     }
   }
 }
