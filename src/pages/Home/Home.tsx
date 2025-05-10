@@ -11,11 +11,18 @@ const Home = () => {
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchParams, setSearchParams] = useState({
     publicationDate: '',
-    listName: ''
+    listName: 'hardcover-fiction' // Valor padrão para a lista
   });
 
-  const loadList = async () => {
-    if (!searchParams.publicationDate || !searchParams.listName) {
+  // Função para formatar a data atual como YYYY-MM-DD
+  const getFormattedCurrentDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
+  // Função para carregar a lista com base nos parâmetros
+  const loadList = async (date: string, listName: string) => {
+    if (!date || !listName) {
       return;
     }
 
@@ -23,10 +30,7 @@ const Home = () => {
       setLoading(true);
       setSearchPerformed(true);
       
-      const result = await fetchListByDate(
-        searchParams.publicationDate,
-        searchParams.listName
-      );
+      const result = await fetchListByDate(date, listName);
       
       setList(result);
     } catch (error) {
@@ -36,6 +40,21 @@ const Home = () => {
       setLoading(false);
     }
   };
+
+  // Efeito para carregar a lista automaticamente quando o componente montar
+  useEffect(() => {
+    const defaultDate = getFormattedCurrentDate();
+    const defaultList = 'hardcover-fiction';
+    
+    // Atualiza o estado com os valores padrão
+    setSearchParams({
+      publicationDate: defaultDate,
+      listName: defaultList
+    });
+    
+    // Carrega a lista com os valores padrão
+    loadList(defaultDate, defaultList);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -47,13 +66,13 @@ const Home = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    loadList();
+    loadList(searchParams.publicationDate, searchParams.listName);
   };
 
   return (
     <Container className="home-page">
       <h2 className="section-title">Best Sellers por data</h2>
-     
+      
       <Form className="search-form" onSubmit={handleSubmit}>
         <Row>
           <Col md={6} lg={4}>
@@ -70,8 +89,8 @@ const Home = () => {
           <Col md={6} lg={4}>
             <Form.Group controlId="lista">
               <Form.Label>Lista</Form.Label>
-              <Form.Control 
-                type="text" 
+              <Form.Control
+                type="text"
                 value={searchParams.listName}
                 onChange={handleInputChange}
                 placeholder="Ex: hardcover-fiction"
@@ -87,7 +106,7 @@ const Home = () => {
           </Col>
         </Row>
       </Form>
-     
+      
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
