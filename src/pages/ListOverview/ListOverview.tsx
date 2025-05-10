@@ -9,10 +9,41 @@ const ListOverview = () => {
   const [lists, setLists] = useState<BookList[]>([]);
   const [loading, setLoading] = useState(true);
   const [publicationDate, setPublicationDate] = useState('');
+  const [initialLoadComplete, setInitialLoadComplete] = useState(false);
+
+  // Função para obter a data atual formatada como YYYY-MM-DD
+  const getFormattedCurrentDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
 
   useEffect(() => {
-    loadLists();
+    // Carrega as listas na montagem inicial
+    loadListsWithDefaultDate();
   }, []);
+
+  // Função para carregar listas com uma data padrão
+  const loadListsWithDefaultDate = async () => {
+    try {
+      setLoading(true);
+      
+      // Usar a data atual como padrão
+      const defaultDate = getFormattedCurrentDate();
+      
+      // Atualizar o estado para refletir no campo do formulário
+      setPublicationDate(defaultDate);
+      
+      const data = await fetchListOverview(defaultDate);
+      setLists(data);
+      
+      // Marcar carregamento inicial como concluído
+      setInitialLoadComplete(true);
+    } catch (error) {
+      console.error('Error loading lists overview:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const loadLists = async () => {
     try {
@@ -68,7 +99,6 @@ const ListOverview = () => {
                   <ListCard
                     list={list}
                     showBooks={true}
-                    // Não mostramos mais as imagens já que a API não as retorna
                     showImage={false}
                   />
                 </Col>

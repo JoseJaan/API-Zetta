@@ -16,7 +16,6 @@ const ListCard = ({
   showImage = false,
   showBooks = false
 }: ListCardProps) => {
-  // Só exibir a imagem se showImage for true E a list.listImage existir
   const shouldShowImage = showImage && list.listImage && list.listImage !== "https://via.placeholder.com/150";
   
   return (
@@ -31,7 +30,7 @@ const ListCard = ({
       <div className="list-card-content">
         <p className="list-update-date">Atualizado em: {new Date(list.updated).toLocaleDateString()}</p>
         
-        {/* Só renderiza a div da imagem se realmente houver uma imagem para mostrar */}
+        {}
         {shouldShowImage && (
           <div className="list-image">
             <img src={list.listImage || ''} alt={list.name} />
