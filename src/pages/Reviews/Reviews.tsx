@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col, Form } from 'react-bootstrap';
 import { Book } from '../../types/index';
 import { searchBooks } from '../../services/api';
@@ -15,7 +15,7 @@ const Reviews = () => {
     title: '',
     author: ''
   });
-  
+ 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setSearchParams(prev => ({
@@ -23,9 +23,9 @@ const Reviews = () => {
       [id]: value
     }));
   };
-  
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+ 
+  const handleSubmit = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
     setLoading(true);
     setSearchPerformed(true);
    
@@ -38,7 +38,21 @@ const Reviews = () => {
       setLoading(false);
     }
   };
-  
+
+  // Carregar resultados de busca padrão ao montar o componente
+  useEffect(() => {
+    // Define uma busca padrão - buscar livros de Michelle Obama
+    setSearchParams({
+      isbn: '',
+      title: '',
+      author: 'Michelle Obama'
+    });
+    
+    // Executa a busca
+    handleSubmit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+ 
   return (
     <Container className="reviews-page">
       <h2 className="section-title">Lista de Reviews</h2>
@@ -49,9 +63,13 @@ const Reviews = () => {
             <Form.Label>ISBN</Form.Label>
             <Form.Control
               type="text"
+              placeholder="Ex: 9781524763138"
               value={searchParams.isbn}
               onChange={handleInputChange}
             />
+            <Form.Text className="text-light">
+              Insira o ISBN completo de 10 ou 13 dígitos
+            </Form.Text>
           </Form.Group>
         </Col>
         <Col md={4}>
@@ -59,9 +77,13 @@ const Reviews = () => {
             <Form.Label>Título</Form.Label>
             <Form.Control
               type="text"
+              placeholder="Ex: Becoming"
               value={searchParams.title}
               onChange={handleInputChange}
             />
+            <Form.Text className="text-light">
+              Digite o título completo do livro
+            </Form.Text>
           </Form.Group>
         </Col>
         <Col md={4}>
@@ -69,9 +91,13 @@ const Reviews = () => {
             <Form.Label>Autor</Form.Label>
             <Form.Control
               type="text"
+              placeholder="Ex: Michelle Obama"
               value={searchParams.author}
               onChange={handleInputChange}
             />
+            <Form.Text className="text-light">
+              Insira o nome e sobrenome do autor
+            </Form.Text>
           </Form.Group>
         </Col>
       </SearchForm>
@@ -90,7 +116,7 @@ const Reviews = () => {
                 ))}
               </Row>
             ) : (
-              <div className="no-results">No books found matching your search criteria.</div>
+              <div className="no-results">Nenhuma review encontrada com os critérios de busca fornecidos.</div>
             )
           )}
         </div>
