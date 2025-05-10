@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { BookList } from '../../types/index';
 import { fetchListOverview } from '../../services/api';
 import ListCard from '../../components/ListCard/ListCard';
+import SearchForm from '../../components/SearchForm/SearchForm';
 import './ListOverview.scss';
 
 const ListOverview = () => {
@@ -10,32 +11,32 @@ const ListOverview = () => {
   const [loading, setLoading] = useState(true);
   const [publicationDate, setPublicationDate] = useState('');
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
-
+  
   // Função para obter a data atual formatada como YYYY-MM-DD
   const getFormattedCurrentDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
   };
-
+  
   useEffect(() => {
     // Carrega as listas na montagem inicial
     loadListsWithDefaultDate();
   }, []);
-
+  
   // Função para carregar listas com uma data padrão
   const loadListsWithDefaultDate = async () => {
     try {
       setLoading(true);
-      
+     
       // Usar a data atual como padrão
       const defaultDate = getFormattedCurrentDate();
-      
+     
       // Atualizar o estado para refletir no campo do formulário
       setPublicationDate(defaultDate);
-      
+     
       const data = await fetchListOverview(defaultDate);
       setLists(data);
-      
+     
       // Marcar carregamento inicial como concluído
       setInitialLoadComplete(true);
     } catch (error) {
@@ -44,7 +45,7 @@ const ListOverview = () => {
       setLoading(false);
     }
   };
-
+  
   const loadLists = async () => {
     try {
       setLoading(true);
@@ -56,38 +57,33 @@ const ListOverview = () => {
       setLoading(false);
     }
   };
-
+  
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPublicationDate(e.target.value);
   };
-
+  
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     loadLists();
   };
-
+  
   return (
     <Container className="list-overview-page">
       <h2 className="section-title">Visão Geral das Listas</h2>
-      
-      <Form className="search-form" onSubmit={handleSubmit}>
-        <Row>
-          <Col md={6}>
-            <Form.Group controlId="publicationDate">
-              <Form.Label>Data de publicação</Form.Label>
-              <Form.Control
-                type="date"
-                value={publicationDate}
-                onChange={handleDateChange}
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6} className="d-flex align-items-end mb-3">
-            <Button type="submit" variant="primary">Buscar</Button>
-          </Col>
-        </Row>
-      </Form>
-      
+     
+      <SearchForm onSubmit={handleSubmit}>
+        <Col md={12}>
+          <Form.Group controlId="publicationDate" className="form-group">
+            <Form.Label>Data de publicação</Form.Label>
+            <Form.Control
+              type="date"
+              value={publicationDate}
+              onChange={handleDateChange}
+            />
+          </Form.Group>
+        </Col>
+      </SearchForm>
+     
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (

@@ -32,12 +32,12 @@ body {
 }
 
 .btn-primary {
-  background-color: $primary-color;
-  border-color: $primary-color;
+  background-color: $secondary-color;
+  border-color: $secondary-color;
   
   &:hover, &:focus {
-    background-color: darken($primary-color, 10%);
-    border-color: darken($primary-color, 10%);
+    background-color: darken($secondary-color, 10%);
+    border-color: darken($secondary-color, 10%);
   }
 }
 

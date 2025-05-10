@@ -4,7 +4,7 @@
   .list-container {
     margin-top: 2rem;
   }
-  
+ 
   .loading {
     text-align: center;
     padding: 2rem;
@@ -12,11 +12,12 @@
     color: $primary-color;
   }
   
-  @media (max-width: $breakpoint-md) {
-    .search-form {
-      .form-group {
-        margin-bottom: 1rem;
-      }
-    }
+  .no-results {
+    text-align: center;
+    padding: 3rem 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    color: #666;
+    font-size: 1.1rem;
   }
 }

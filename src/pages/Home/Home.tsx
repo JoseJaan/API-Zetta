@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Container, Row, Col, Form } from 'react-bootstrap';
 import { BookList } from '../../types/index';
 import { fetchListByDate } from '../../services/api';
 import ListCard from '../../components/ListCard/ListCard';
+import SearchForm from '../../components/SearchForm/SearchForm';
 import './Home.scss';
 
 const Home = () => {
@@ -73,39 +74,34 @@ const Home = () => {
     <Container className="home-page">
       <h2 className="section-title">Best Sellers por data</h2>
       
-      <Form className="search-form" onSubmit={handleSubmit}>
-        <Row>
-          <Col md={6} lg={4}>
-            <Form.Group controlId="publicationDate">
-              <Form.Label>Data de publicação</Form.Label>
-              <Form.Control
-                type="date"
-                value={searchParams.publicationDate}
-                onChange={handleInputChange}
-                required
-              />
-            </Form.Group>
-          </Col>
-          <Col md={6} lg={4}>
-            <Form.Group controlId="lista">
-              <Form.Label>Lista</Form.Label>
-              <Form.Control
-                type="text"
-                value={searchParams.listName}
-                onChange={handleInputChange}
-                placeholder="Ex: hardcover-fiction"
-                required
-              />
-              <Form.Text className="text-muted">
-                Use o nome codificado da lista (ex: hardcover-fiction, paperback-nonfiction)
-              </Form.Text>
-            </Form.Group>
-          </Col>
-          <Col md={6} lg={4} className="d-flex align-items-end mb-3">
-            <Button type="submit" variant="primary">Buscar</Button>
-          </Col>
-        </Row>
-      </Form>
+      <SearchForm onSubmit={handleSubmit}>
+        <Col md={6} lg={6}>
+          <Form.Group controlId="publicationDate" className="form-group">
+            <Form.Label>Data de publicação</Form.Label>
+            <Form.Control
+              type="date"
+              value={searchParams.publicationDate}
+              onChange={handleInputChange}
+              required
+            />
+          </Form.Group>
+        </Col>
+        <Col md={6} lg={6}>
+          <Form.Group controlId="lista" className="form-group">
+            <Form.Label>Lista</Form.Label>
+            <Form.Control
+              type="text"
+              value={searchParams.listName}
+              onChange={handleInputChange}
+              placeholder="Ex: hardcover-fiction"
+              required
+            />
+            <Form.Text className="text-muted">
+              Use o nome codificado da lista (ex: hardcover-fiction, paperback-nonfiction)
+            </Form.Text>
+          </Form.Group>
+        </Col>
+      </SearchForm>
       
       {loading ? (
         <div className="loading">Loading...</div>
