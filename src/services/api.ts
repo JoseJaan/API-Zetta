@@ -39,12 +39,12 @@ export const fetchListOverview = async (
     const response = await getOverviewLists({ 
       published_date: publicationDate 
     });
-
+    const updated = response.results.bestsellers_date
     return response.results.lists.map((list: any) => ({
       id: list.list_id || list.list_name_encoded,
       name: list.list_name,
       displayName: list.display_name,
-      updated: list.updated,
+      updated: updated,
       listImage: list.list_image || null,
       books: list.books ? list.books.map((book: any) => transformBookData(book)) : []
     }));
@@ -65,7 +65,6 @@ export const fetchListByDate = async (
     });
 
     const result = response.results;
-    console.log("result: ",result)
     return {
       id: result.list_id || result.list_name_encoded,
       name: result.list_name,

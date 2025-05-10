@@ -10,14 +10,15 @@ interface ListCardProps {
   showBooks?: boolean;
 }
 
-const ListCard = ({ 
-  list, 
-  showRanking = false, 
+const ListCard = ({
+  list,
+  showRanking = false,
   showImage = false,
-  showBooks = false 
+  showBooks = false
 }: ListCardProps) => {
-  console.log("list: ",list)
-  console.log("list.updated: ",list.updated)
+  // Só exibir a imagem se showImage for true E a list.listImage existir
+  const shouldShowImage = showImage && list.listImage && list.listImage !== "https://via.placeholder.com/150";
+  
   return (
     <div className="list-card">
       <div className="list-card-header">
@@ -30,9 +31,10 @@ const ListCard = ({
       <div className="list-card-content">
         <p className="list-update-date">Atualizado em: {new Date(list.updated).toLocaleDateString()}</p>
         
-        {showImage && list.listImage && (
+        {/* Só renderiza a div da imagem se realmente houver uma imagem para mostrar */}
+        {shouldShowImage && (
           <div className="list-image">
-            <img src={list.listImage} alt={list.name} />
+            <img src={list.listImage || ''} alt={list.name} />
           </div>
         )}
         

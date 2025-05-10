@@ -9,19 +9,23 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-
+  
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-
+  
+  .list-card-header {
+    margin-bottom: 0.5rem;
+  }
+  
   .list-name {
     margin-top: 0;
     margin-bottom: 0.75rem;
     font-weight: 600;
     color: $primary-color;
   }
-
+  
   .list-update-date,
   .list-publication-date,
   .list-ranking {
@@ -29,15 +33,14 @@
     font-size: 0.9rem;
     color: #555;
   }
-
+  
+  // Estilos para a imagem, só serão aplicados quando a imagem for renderizada
   .list-image {
-    margin-top: 1rem;
-    align-self: center;
+    margin: 1rem 0;
     width: 100%;
-    height: 200px;
+    max-height: 200px;
     display: flex;
     justify-content: center;
-    overflow: hidden;
     
     img {
       width: 100%;
@@ -46,30 +49,35 @@
       border-radius: 4px;
       max-height: 200px;
     }
-    
-    .image-caption {
-      text-align: center;
-      font-size: 0.8rem;
-      margin-top: 0.5rem;
-      color: #777;
-    }
   }
-
+  
   .books-preview {
     margin-top: 1.5rem;
-
+    
     h4 {
       font-size: 1.1rem;
       margin-bottom: 1rem;
       color: $primary-color;
     }
-
+    
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1rem;
+      
+      @media (max-width: 576px) {
+        grid-template-columns: 1fr; // Uma coluna em dispositivos muito pequenos
+      }
+      
+      @media (min-width: 768px) and (max-width: 991px) {
+        grid-template-columns: repeat(2, 1fr); // Duas colunas em dispositivos médios
+      }
+      
+      @media (min-width: 992px) {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); // Responsivo em dispositivos grandes
+      }
     }
-
+    
     .more-books {
       margin-top: 0.5rem;
       text-align: right;

@@ -38,7 +38,7 @@ const ListOverview = () => {
   return (
     <Container className="list-overview-page">
       <h2 className="section-title">Visão Geral das Listas</h2>
-     
+      
       <Form className="search-form" onSubmit={handleSubmit}>
         <Row>
           <Col md={6}>
@@ -56,7 +56,7 @@ const ListOverview = () => {
           </Col>
         </Row>
       </Form>
-     
+      
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
@@ -66,12 +66,10 @@ const ListOverview = () => {
               {lists.map((list) => (
                 <Col key={list.id} xs={12} className="mb-4">
                   <ListCard
-                    list={{
-                      ...list,
-                      listImage: list.listImage || "https://via.placeholder.com/150"
-                    }}
-                    showImage={true}
+                    list={list}
                     showBooks={true}
+                    // Não mostramos mais as imagens já que a API não as retorna
+                    showImage={false}
                   />
                 </Col>
               ))}
