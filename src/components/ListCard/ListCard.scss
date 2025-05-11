@@ -41,6 +41,15 @@
       gap: 0.5rem;
     }
   }
+
+  .custom-badge {
+    background-color: $secondary-color;
+    color: $light-bg; 
+    font-weight: 500;
+    padding: 0.4em 0.6em;
+    border-radius: 0.5rem;
+    font-size: 0.85rem;
+  }
   
   .list-info {
     margin-top: 0.75rem;
@@ -136,15 +145,15 @@
       gap: 1rem;
      
       @media (max-width: 576px) {
-        grid-template-columns: 1fr; // Uma coluna em dispositivos muito pequenos
+        grid-template-columns: 1fr; 
       }
      
       @media (min-width: 768px) and (max-width: 991px) {
-        grid-template-columns: repeat(2, 1fr); // Duas colunas em dispositivos médios
+        grid-template-columns: repeat(2, 1fr); 
       }
      
       @media (min-width: 992px) {
-        grid-template-columns: repeat(3, 1fr); // Três colunas em dispositivos grandes
+        grid-template-columns: repeat(3, 1fr); 
       }
     }
   }

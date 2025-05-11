@@ -74,6 +74,9 @@ const ListOverview = () => {
               value={publicationDate}
               onChange={handleDateChange}
             />
+            <Form.Text className="text-light">
+              MM/DD/AAAA
+            </Form.Text>
           </Form.Group>
         </Col>
       </SearchForm>

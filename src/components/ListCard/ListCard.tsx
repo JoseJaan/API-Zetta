@@ -60,9 +60,8 @@ const ListCard = ({
         {showBooks && list.books && list.books.length > 0 && (
           <div className="books-preview">
             <h4>
-              Livros nesta lista <span className="badge bg-primary">{list.books.length}</span>
+              Livros nesta lista <span className="custom-badge">{list.books.length}</span>
             </h4>
-            
             <div className="books-stats">
               <div className="row">
                 <div className="col-md-6">

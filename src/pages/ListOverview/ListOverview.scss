@@ -6,20 +6,6 @@
     color: $primary-color;
   }
 
-  .search-form {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background-color: $primary-color;
-    border-radius: 8px;
-    
-    @media (max-width: 767px) {
-      .align-items-end {
-        align-items: flex-start !important;
-        margin-top: 1rem;
-      }
-    }
-  }
-
   .list-container {
     margin-top: 2rem;
   }

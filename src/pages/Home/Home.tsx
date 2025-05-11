@@ -79,6 +79,9 @@ const Home = () => {
               onChange={handleInputChange}
               required
             />
+            <Form.Text className="text-light">
+              MM/DD/AAAA
+            </Form.Text>
           </Form.Group>
         </Col>
         <Col md={6} lg={6}>
