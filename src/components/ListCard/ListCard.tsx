@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BookList } from '../../types';
 import BookCard from '../BookCard/BookCard';
 import './ListCard.scss';
