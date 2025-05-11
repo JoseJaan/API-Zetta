@@ -94,7 +94,6 @@ export const searchBooks = async ({
       title,
       author
     });
-    
     return response.results.map((item: any) => ({
       id: item.isbn13 || item.primary_isbn13 || item.isbn10 || item.primary_isbn10 || item.title,
       title: item.book_title || item.title,

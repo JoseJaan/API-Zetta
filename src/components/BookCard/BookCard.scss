@@ -7,38 +7,37 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   height: 100%;
-  cursor: pointer;
-
+  
   &:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
-
+  
   .book-title {
     margin-top: 0;
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: $primary-color;
   }
-
+  
   .book-author {
     font-style: italic;
     margin-bottom: 0.5rem;
   }
-
+  
   .book-isbn {
     color: #666;
     font-size: 0.9rem;
     margin-bottom: 1rem;
   }
-
+  
   .book-image {
     width: 100%;
     height: 200px;
     display: flex;
     justify-content: center;
     margin: 1rem 0;
-    
+   
     img {
       width: 100%;
       height: 100%;
@@ -47,40 +46,93 @@
       max-height: 200px;
     }
   }
-
+  
   .book-summary {
     border-top: 1px solid #ddd;
     padding-top: 1rem;
     margin-top: 1rem;
-    
+   
     .summary-heading {
       font-size: 1rem;
       margin-top: 0;
       margin-bottom: 0.5rem;
       color: $primary-color;
     }
-    
+   
     .summary-text {
       font-size: 0.9rem;
       line-height: 1.5;
       color: #333;
     }
   }
-
+  
+  .book-reviews {
+    border-top: 1px solid #ddd;
+    padding-top: 1rem;
+    margin-top: 1rem;
+    
+    .reviews-heading {
+      font-size: 1rem;
+      margin-top: 0;
+      margin-bottom: 0.5rem;
+      color: $primary-color;
+    }
+    
+    .review-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: #fff;
+      border-radius: 6px;
+      border-left: 3px solid $primary-color;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: #f0f0f0;
+        transform: translateX(3px);
+      }
+      
+      .review-byline {
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+        color: #666;
+      }
+      
+      .review-summary {
+        margin-bottom: 0.5rem;
+        font-size: 0.95rem;
+      }
+      
+      .review-link {
+        display: inline-block;
+        color: $primary-color;
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+        text-decoration: none;
+        
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+  
   &.compact {
     padding: 1rem;
-    
+    cursor: pointer;
+   
     .d-flex {
       display: flex;
       align-items: center;
     }
-    
+   
     .compact-image {
       width: 80px;
       height: 120px;
       margin-right: 1rem;
       flex-shrink: 0;
-      
+     
       .book-thumbnail {
         width: 100%;
         height: 100%;
@@ -88,16 +140,37 @@
         border-radius: 4px;
       }
     }
-    
+   
     .compact-info {
       .book-title {
         font-size: 1rem;
         margin-bottom: 0.25rem;
       }
-      
+     
       .book-author {
         font-size: 0.85rem;
         margin-bottom: 0.5rem;
+      }
+    }
+  }
+  
+  // Responsividade para diferentes breakpoints
+  @media (max-width: 576px) {
+    padding: 1rem;
+    
+    .book-image {
+      height: 150px;
+    }
+    
+    .review-item {
+      padding: 0.75rem;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    .book-reviews {
+      .review-item {
+        padding: 0.875rem;
       }
     }
   }

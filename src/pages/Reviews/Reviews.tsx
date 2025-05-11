@@ -39,18 +39,14 @@ const Reviews = () => {
     }
   };
 
-  // Carregar resultados de busca padrão ao montar o componente
   useEffect(() => {
-    // Define uma busca padrão - buscar livros de Michelle Obama
     setSearchParams({
       isbn: '',
       title: '',
-      author: 'Michelle Obama'
+      author: 'Fyodor Dostoevsky'
     });
-    
-    // Executa a busca
+   
     handleSubmit();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
  
   return (
@@ -58,7 +54,7 @@ const Reviews = () => {
       <h2 className="section-title">Lista de Reviews</h2>
      
       <SearchForm onSubmit={handleSubmit}>
-        <Col md={4}>
+        <Col xs={12} md={4}>
           <Form.Group controlId="isbn" className="form-group">
             <Form.Label>ISBN</Form.Label>
             <Form.Control
@@ -72,12 +68,12 @@ const Reviews = () => {
             </Form.Text>
           </Form.Group>
         </Col>
-        <Col md={4}>
+        <Col xs={12} md={4}>
           <Form.Group controlId="title" className="form-group">
             <Form.Label>Título</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Ex: Becoming"
+              placeholder="Ex: Crime and Punishment"
               value={searchParams.title}
               onChange={handleInputChange}
             />
@@ -86,12 +82,12 @@ const Reviews = () => {
             </Form.Text>
           </Form.Group>
         </Col>
-        <Col md={4}>
+        <Col xs={12} md={4}>
           <Form.Group controlId="author" className="form-group">
             <Form.Label>Autor</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Ex: Michelle Obama"
+              placeholder="Ex: Fyodor Dostoevsky"
               value={searchParams.author}
               onChange={handleInputChange}
             />
@@ -110,8 +106,8 @@ const Reviews = () => {
             books.length > 0 ? (
               <Row>
                 {books.map((book) => (
-                  <Col key={book.id} md={6} lg={4} className="mb-4">
-                    <BookCard book={book} />
+                  <Col key={book.id} xs={12} md={6} lg={4} className="mb-4">
+                    <BookCard book={book} showReviews={true} />
                   </Col>
                 ))}
               </Row>
