@@ -4,7 +4,7 @@ import { BookList } from '../../types/index';
 import { fetchListByDate } from '../../services/api';
 import ListCard from '../../components/ListCard/ListCard';
 import SearchForm from '../../components/SearchForm/SearchForm';
-import './Home.scss';
+import './BestSellers.scss';
 
 const Home = () => {
   const [list, setList] = useState<BookList | null>(null);
@@ -67,7 +67,7 @@ const Home = () => {
 
   return (
     <Container className="home-page">
-      <h2 className="section-title">Best Sellers por data</h2>
+      <h2 className="section-title">Best Sellers</h2>
       
       <SearchForm onSubmit={handleSubmit}>
         <Col md={6} lg={6}>

@@ -14,7 +14,7 @@ const BookCard = ({
   book,
   showSummary = true,
   compact = false,
-  showReviews = true // Alterado para true como padrão para exibir as reviews
+  showReviews = true
 }: BookCardProps) => {
  
   const handleBookClick = () => {
@@ -24,7 +24,7 @@ const BookCard = ({
   };
 
   const handleReviewClick = (url: string, e: React.MouseEvent) => {
-    e.stopPropagation(); // Evita que o evento de clique propague para o card
+    e.stopPropagation();
     window.open(url, '_blank', 'noopener,noreferrer');
   };
  

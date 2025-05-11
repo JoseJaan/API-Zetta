@@ -18,8 +18,7 @@ const ListCard = ({
 }: ListCardProps) => {
   const [expanded, setExpanded] = useState(false);
   const shouldShowImage = showImage && list.listImage && list.listImage !== "https://via.placeholder.com/150";
-  
-  // Format date to a more readable format
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('pt-BR', {
       day: 'numeric',
@@ -100,7 +99,6 @@ const ListCard = ({
   );
 };
 
-// Helper functions to get statistics from books
 const getMostFrequentAuthor = (books: any[]) => {
   const authorCount = books.reduce((acc, book) => {
     acc[book.author] = (acc[book.author] || 0) + 1;
