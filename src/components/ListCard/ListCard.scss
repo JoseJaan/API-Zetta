@@ -2,87 +2,159 @@
 
 .list-card {
   background-color: #f9f9f9;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.12);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex;
   flex-direction: column;
   height: 100%;
-  
+  margin-bottom: 1.5rem;
+ 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
-  
+ 
   .list-card-header {
-    margin-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
   }
-  
+ 
   .list-name {
     margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-weight: 600;
+    margin-bottom: 1rem;
+    font-weight: 700;
     color: $primary-color;
+    font-size: 1.5rem;
   }
   
+  .list-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    
+    @media (max-width: 576px) {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+  }
+  
+  .list-info {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed #ddd;
+    font-size: 0.9rem;
+  }
+ 
   .list-update-date,
   .list-publication-date,
-  .list-ranking {
-    margin: 0.5rem 0;
+  .list-ranking,
+  .list-id {
+    margin: 0.25rem 0;
     font-size: 0.9rem;
     color: #555;
   }
   
-  // Estilos para a imagem, só serão aplicados quando a imagem for renderizada
+  .badge {
+    font-weight: 500;
+  }
+ 
+  // Estilos para a imagem
   .list-image {
     margin: 1rem 0;
     width: 100%;
-    max-height: 200px;
+    max-height: 220px;
     display: flex;
     justify-content: center;
-    
+    overflow: hidden;
+    border-radius: 8px;
+   
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      border-radius: 4px;
-      max-height: 200px;
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
     }
   }
   
+  .list-card-body {
+    flex: 1;
+  }
+  
+  .list-card-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: flex-end;
+  }
+ 
   .books-preview {
     margin-top: 1.5rem;
-    
+   
     h4 {
       font-size: 1.1rem;
       margin-bottom: 1rem;
       color: $primary-color;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     
+    .books-stats {
+      background-color: rgba(0,0,0,0.03);
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 1.25rem;
+      
+      .stat-item {
+        margin: 0.5rem 0;
+        
+        i {
+          margin-right: 0.5rem;
+          color: $secondary-color;
+        }
+      }
+      
+      @media (max-width: 576px) {
+        .row {
+          flex-direction: column;
+        }
+      }
+    }
+   
     .books-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 1rem;
-      
+     
       @media (max-width: 576px) {
         grid-template-columns: 1fr; // Uma coluna em dispositivos muito pequenos
       }
-      
+     
       @media (min-width: 768px) and (max-width: 991px) {
         grid-template-columns: repeat(2, 1fr); // Duas colunas em dispositivos médios
       }
-      
+     
       @media (min-width: 992px) {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); // Responsivo em dispositivos grandes
+        grid-template-columns: repeat(3, 1fr); // Três colunas em dispositivos grandes
       }
     }
+  }
+  
+  .btn {
+    border-radius: 50px;
     
-    .more-books {
-      margin-top: 0.5rem;
-      text-align: right;
-      font-style: italic;
-      color: #666;
+    &.btn-outline-secondary:hover {
+      background-color: $secondary-color;
+      color: white;
     }
   }
 }

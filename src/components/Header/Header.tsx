@@ -12,8 +12,7 @@ const Header = () => {
   const menuItems: MenuItem[] = [
     { id: 'home', label: 'Best Sellers por data', pageType: PageType.HOME, route: '/' },
     { id: 'overview', label: 'Lista de Overview', pageType: PageType.OVERVIEW, route: '/overview' },
-    { id: 'reviews', label: 'Lista de Reviews', pageType: PageType.REVIEWS, route: '/reviews' },
-    { id: 'best-sellers', label: 'Lista de Best Sellers', pageType: PageType.BEST_SELLERS, route: '/best-sellers' }
+    { id: 'reviews', label: 'Lista de Reviews', pageType: PageType.REVIEWS, route: '/reviews' }
   ];
 
   // Find current page based on route

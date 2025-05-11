@@ -12,16 +12,14 @@ const Home = () => {
   const [searchPerformed, setSearchPerformed] = useState(false);
   const [searchParams, setSearchParams] = useState({
     publicationDate: '',
-    listName: 'hardcover-fiction' // Valor padrão para a lista
+    listName: 'hardcover-fiction' 
   });
 
-  // Função para formatar a data atual como YYYY-MM-DD
   const getFormattedCurrentDate = () => {
     const today = new Date();
     return today.toISOString().split('T')[0];
   };
 
-  // Função para carregar a lista com base nos parâmetros
   const loadList = async (date: string, listName: string) => {
     if (!date || !listName) {
       return;
@@ -32,7 +30,7 @@ const Home = () => {
       setSearchPerformed(true);
       
       const result = await fetchListByDate(date, listName);
-      
+      console.log("result: ",result)
       setList(result);
     } catch (error) {
       console.error('Error loading list by date:', error);
@@ -42,18 +40,15 @@ const Home = () => {
     }
   };
 
-  // Efeito para carregar a lista automaticamente quando o componente montar
   useEffect(() => {
     const defaultDate = getFormattedCurrentDate();
     const defaultList = 'hardcover-fiction';
     
-    // Atualiza o estado com os valores padrão
     setSearchParams({
       publicationDate: defaultDate,
       listName: defaultList
     });
     
-    // Carrega a lista com os valores padrão
     loadList(defaultDate, defaultList);
   }, []);
 
@@ -96,7 +91,7 @@ const Home = () => {
               placeholder="Ex: hardcover-fiction"
               required
             />
-            <Form.Text className="text-muted">
+            <Form.Text className="text-light">
               Use o nome codificado da lista (ex: hardcover-fiction, paperback-nonfiction)
             </Form.Text>
           </Form.Group>

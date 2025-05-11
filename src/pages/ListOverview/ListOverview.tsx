@@ -19,25 +19,19 @@ const ListOverview = () => {
   };
   
   useEffect(() => {
-    // Carrega as listas na montagem inicial
     loadListsWithDefaultDate();
   }, []);
   
-  // Função para carregar listas com uma data padrão
   const loadListsWithDefaultDate = async () => {
     try {
       setLoading(true);
      
-      // Usar a data atual como padrão
       const defaultDate = getFormattedCurrentDate();
      
-      // Atualizar o estado para refletir no campo do formulário
       setPublicationDate(defaultDate);
      
       const data = await fetchListOverview(defaultDate);
       setLists(data);
-     
-      // Marcar carregamento inicial como concluído
       setInitialLoadComplete(true);
     } catch (error) {
       console.error('Error loading lists overview:', error);

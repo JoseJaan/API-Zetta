@@ -1,36 +1,10 @@
 import { Book, BookList } from '../types/index';
 import { 
-  getBestSellers,
   getBookReviews,
   getBestSellersByDate,
   getOverviewLists
 } from './booksApi';
 
-export const fetchLists = async (
-  publicationDate?: string,
-  bestSellersDate?: string
-): Promise<BookList[]> => {
-  try {
-    const response = await getBestSellers({
-      list: 'hardcover-fiction',
-      publishedDate: publicationDate,
-      bestsellersDate: bestSellersDate
-    });
-
-    return response.results.map((item: any) => ({
-      id: item.list_id || item.list_name_encoded,
-      name: item.list_name,
-      displayName: item.display_name,
-      updated: item.updated,
-      listImage: item.list_image || null,
-      books: item.books ? item.books.map((book: any) => transformBookData(book)) : [],
-      ranking: item.rank || null
-    }));
-  } catch (error) {
-    console.error('Error fetching lists:', error);
-    return [];
-  }
-};
 
 export const fetchListOverview = async (
   publicationDate?: string
